@@ -39,6 +39,23 @@ class Http_Cripto {
     };
     var request = null;
     try {
+      if (req.session.aesKey) {
+        console.log("létező session", req.session.aesKey);
+        /*
+        kérés dekódolása session.crypto kulcsal.
+        */
+      } else {
+        console.log("új session");
+
+        //rsa dekódolás -> cliens public key kinyerése
+        //(cliens public key beállítása sessionba.)
+        //aes kulcs generálása
+        var sessionAES = AES.generateKey();
+        //aes kulcs mentése sessionba
+        req.session.aesKey = sessionAES;
+        //aes kulcs kódoloása cliens public key-el
+        //kódolt aes kulcs küldése válaszként.
+      }
       // ha json érkezett akkor ez handshake vagy támadás
       request = JSON.parse(req.text);
       try {
