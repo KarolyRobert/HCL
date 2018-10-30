@@ -1,7 +1,19 @@
 const express = require("express");
 const Http_Crypto = require("./http_crypto");
+const session = require("express-session");
 
 const app = express();
+app.set("trust proxy", 1);
+
+app.use(
+  session({
+    secret: "sessionsecret",
+    saveUninitialized: false,
+    resave: false,
+    cookie: { maxAge: 3600000 }
+  })
+);
+
 var http_crypto = new Http_Crypto({
   serverkey: "",
   clientkey: ""
